@@ -100,7 +100,8 @@ const Baka = () => {
 
       {submit ?
         <div className='flex'>
-          {filterDropdown.sort((a, b) => Number(a.Time) > Number(b.Time) ? 1 : -1).map((course) => (
+            
+           {filterDropdown.length > 0 ? filterDropdown.sort((a, b) => Number(a.Time) > Number(b.Time) ? 1 : -1).map((course) => (
             <div key={course.id} style={{ margin: "10px" }}>
               <p className="time">{course.Time}</p>
               <HtmlTooltip
@@ -108,9 +109,9 @@ const Baka = () => {
                   <div style={{ height: "250px", overflowY: "auto" }}>
                     <span className="result">PhoneNumber:</span> {formatPhoneNumber(course.PhoneNumber)}
                     <br />
-                    <span className="result">Message:</span>{course.result
+                    <span className="result">Message:</span>{(course.result
                       ? course.result.replace(/-->/g, 'to').replace(/[",']/g, '').slice(2, -3).split(/\r?\\n/).map(place => <div className='evenelement'><p className='place'> {place} </p></div>)
-                      : "No Message"}
+                      : "No Message")}
                   </div>
                 }
                 interactive={true}
@@ -119,7 +120,7 @@ const Baka = () => {
               </HtmlTooltip>
               <div className="phoneNumber">{formatPhoneNumber(course.PhoneNumber)}</div>
             </div>
-          ))}
+          )) : <div className='nodata'>No Data</div>} 
         </div>
         : null}
 
