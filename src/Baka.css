@@ -53,3 +53,7 @@ margin-bottom: 10px;
 .result {
   font-weight: bold;
 }
+
+.nodata {
+  margin-left: 45%;
+}
