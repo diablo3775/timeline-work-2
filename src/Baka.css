@@ -31,4 +31,12 @@ hr {
   margin: 1%;
  }
  
- 
+.place {
+margin-top: 0px;
+margin-bottom: 10px;
+}
+
+.evenelement:nth-child(even) > .place {
+  margin-top: 0px;
+  margin-bottom: 0px !important;
+}
