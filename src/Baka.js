@@ -1,34 +1,8 @@
+import { withStyles, makeStyles } from "@material-ui/core/styles";
 import React, { useEffect, useState } from 'react'
+import Tooltip from "@material-ui/core/Tooltip";
 import data from './a/name.json'
 import './Baka.css'
-import { withStyles, makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import Tooltip from "@material-ui/core/Tooltip";
-import Typography from "@material-ui/core/Typography";
-
-const LightTooltip = withStyles((theme) => ({
-  tooltip: {
-    backgroundColor: theme.palette.common.white,
-    color: "rgba(0, 0, 0, 0.87)",
-    boxShadow: theme.shadows[1],
-    fontSize: 11
-  }
-}))(Tooltip);
-
-const useStylesBootstrap = makeStyles((theme) => ({
-  arrow: {
-    color: theme.palette.common.black
-  },
-  tooltip: {
-    backgroundColor: theme.palette.common.black
-  }
-}));
-
-function BootstrapTooltip(props) {
-  const classes = useStylesBootstrap();
-
-  return <Tooltip arrow classes={classes} {...props} />;
-}
 
 const HtmlTooltip = withStyles((theme) => ({
   tooltip: {
@@ -42,7 +16,7 @@ const HtmlTooltip = withStyles((theme) => ({
 
 const Baka = () => {
   const [data, setData] = useState([])
-  const [date,setDate] = useState("")
+  const [date, setDate] = useState("")
   const [CallerName, setCallerName] = useState("");
   const [submit, setSubmit] = useState(false)
 
@@ -69,7 +43,7 @@ const Baka = () => {
 
       // eliminate the dead keys & store unique objects
       .filter((e) => arr[e])
-      
+
       .map((e) => arr[e]);
 
     return unique;
@@ -84,9 +58,9 @@ const Baka = () => {
   const uniqueName = getUnique(data, "CallerName")
 
   const filterDropdown = data.filter(function (result) {
-    return result.Date === date  && result.CallerName === CallerName;
+    return result.Date === date && result.CallerName === CallerName;
   });
-  
+
 
   function formatPhoneNumber(phoneNumberString) {
     var cleaned = ('' + phoneNumberString).replace(/\D/g, '');
@@ -97,80 +71,57 @@ const Baka = () => {
     }
     return null;
   }
-  formatPhoneNumber('+12345678900') // => "+1 (234) 567-8900"
-  formatPhoneNumber('2345678900')   // => "(234) 567-8900"
-  console.log(data.map((r) => formatPhoneNumber(r.PhoneNumber)))
+
 
   return (
     <div className='timeline-container'>
-<div style={{margin: '6px'}}> 
-<span>Name: </span>
-          <select value={CallerName} onChange={handleChangeName} style={{borderRadius: '10px'}}>
-            {uniqueName.map((course) => (
-              <option key={course.id} value={course.CallerName}>
-                {course.CallerName}
-              </option>
-            ))}
-          </select>
-</div>
-        <hr />
-          <div style={{margin: '6px'}}>
-          <span>Date: </span>
-            <select value={date} onChange={handleChangeCourse} style={{borderRadius: '10px'}}>
-              {uniqueCouse.sort((a, b) => a.Date > b.Date ? 1 : -1).map((course) => (
-                <option key={course.id} value={course.Date}>
-                  {course.Date}
-                </option>
-              ))}
-            </select>
-          </div>
-          <button style={{marginLeft: '50px',borderRadius: '10px',border:'1px solid black'}} onClick={handleSubmit}>Ok</button>
+      <div style={{ margin: '6px' }}>
+        <span>Name: </span>
+        <select value={CallerName} onChange={handleChangeName} style={{ borderRadius: '10px' }}>
+          {uniqueName.map((course) => (
+            <option key={course.id} value={course.CallerName}>
+              {course.CallerName}
+            </option>
+          ))}
+        </select>
+      </div>
+      <hr />
+      <div style={{ margin: '6px' }}>
+        <span>Date: </span>
+        <select value={date} onChange={handleChangeCourse} style={{ borderRadius: '10px' }}>
+          {uniqueCouse.sort((a, b) => a.Date > b.Date ? 1 : -1).map((course) => (
+            <option key={course.id} value={course.Date}>
+              {course.Date}
+            </option>
+          ))}
+        </select>
+      </div>
+      <button style={{ marginLeft: '50px', borderRadius: '10px', border: '1px solid black' }} onClick={handleSubmit}>Ok</button>
 
-        {submit ? 
+      {submit ?
         <div className='flex'>
-          {filterDropdown.sort((a,b) => Number(a.Time) > Number(b.Time) ? 1 : -1).map((course) => (
+          {filterDropdown.sort((a, b) => Number(a.Time) > Number(b.Time) ? 1 : -1).map((course) => (
             <div key={course.id} style={{ margin: "10px" }}>
-              <p>{course.Time}</p>
+              <p className="time">{course.Time}</p>
               <HtmlTooltip
-        title={
-//           <div style={{ height: "250px", overflowY: "auto" }}>
-//           Phone Number: {course.PhoneNumber}
-//           <br /> 
-// Message:{course.result 
-// ?  course.result.replace(/-->/g, 'to').replace(/[",']/g, '').slice(2,-3).split("\\n").map(place => <p> {place} </p>) 
-// : "No Reply"}
-
-// .replace(/[\\n]/g, '')
-// </div>
-          <div style={{ height: "250px", overflowY: "auto" }}>
-                          Phone Number: {formatPhoneNumber(course.PhoneNumber)}
-                          <br /> 
-               Message:{course.result 
-               ? course.result.replace(/-->/g, 'to').replace(/[",']/g, '').slice(2,-3).split(/\r?\\n/).map(place => <div className='evenelement'><p className='place'> {place} </p></div>)  
-               : "No Message"}
-          </div>
-        }
-        interactive={true}
-      >
+                title={
+                  <div style={{ height: "250px", overflowY: "auto" }}>
+                    <span className="result">PhoneNumber:</span> {formatPhoneNumber(course.PhoneNumber)}
+                    <br />
+                    <span className="result">Message:</span>{course.result
+                      ? course.result.replace(/-->/g, 'to').replace(/[",']/g, '').slice(2, -3).split(/\r?\\n/).map(place => <div className='evenelement'><p className='place'> {place} </p></div>)
+                      : "No Message"}
+                  </div>
+                }
+                interactive={true}
+              >
                 <div>⦿</div>
-      </HtmlTooltip>
-
-              {/* <div className="tooltip-on-hover">⦿</div>
-              <div className="tooltip">
-              Phone Number: {course.PhoneNumber}
-              <br /> 
-               Message:{course.result 
-                ? course.result.replace(/-->/g, 'to').replace(/[",']/g, '').slice(2,-2).split("\\n").map(place => <p> {place} </p>) 
-                : "No Reply"}
-              </div> */}
-              <div style={{width: '110px'}}>{formatPhoneNumber(course.PhoneNumber)}</div>
-              {/* <div>{course.result 
-                ? course.result.replace(/-->/g, 'to').replace(/[",']/g, '').slice(2,-2).split("\\n").map(place => <div className='l'> {place} </div>) 
-                : "No Reply"}</div> */}
+              </HtmlTooltip>
+              <div className="phoneNumber">{formatPhoneNumber(course.PhoneNumber)}</div>
             </div>
           ))}
         </div>
-      : null}
+        : null}
 
     </div>
   )
