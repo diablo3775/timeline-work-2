@@ -140,13 +140,13 @@ const Baka = () => {
 // ?  course.result.replace(/-->/g, 'to').replace(/[",']/g, '').slice(2,-3).split("\\n").map(place => <p> {place} </p>) 
 // : "No Reply"}
 
-
+// .replace(/[\\n]/g, '')
 // </div>
           <div style={{ height: "250px", overflowY: "auto" }}>
                           Phone Number: {formatPhoneNumber(course.PhoneNumber)}
                           <br /> 
                Message:{course.result 
-               ? course.result.replace(/-->/g, 'to').replace(/[",']/g, '').slice(2,-3).split("\\n").map(place => <p> {place} </p>)  
+               ? course.result.replace(/-->/g, 'to').replace(/[",']/g, '').slice(2,-3).split(/\r?\\n/).map(place => <div className='evenelement'><p className='place'> {place} </p></div>)  
                : "No Message"}
           </div>
         }
@@ -164,6 +164,9 @@ const Baka = () => {
                 : "No Reply"}
               </div> */}
               <div style={{width: '110px'}}>{formatPhoneNumber(course.PhoneNumber)}</div>
+              {/* <div>{course.result 
+                ? course.result.replace(/-->/g, 'to').replace(/[",']/g, '').slice(2,-2).split("\\n").map(place => <div className='l'> {place} </div>) 
+                : "No Reply"}</div> */}
             </div>
           ))}
         </div>
