@@ -24,7 +24,7 @@
 hr {
     position: absolute;
     width: 100%;
-    margin-top: 125px;
+    margin-top: 107px;
 }
 
  label {
@@ -39,4 +39,17 @@ margin-bottom: 10px;
 .evenelement:nth-child(even) > .place {
   margin-top: 0px;
   margin-bottom: 0px !important;
+}
+
+.time {
+  font-size: 14px;
+}
+
+.phoneNumber {
+  font-size: 12px;
+  width: 85px;
+}
+
+.result {
+  font-weight: bold;
 }
