@@ -76,22 +76,28 @@ const Baka = () => {
     <div className='timeline-container'>
       <div style={{ margin: '6px' }}>
         <span>Name: </span>
-        <select className='dropdown' value={CallerName} onChange={handleChangeName}>
+        <select className='dropdown' value={CallerName} onChange={handleChangeName} selected=''>
           {uniqueName.map((course) => (
+            <>
+            <option selected disabled hidden value=''>Select</option>
             <option key={course.id} value={course.CallerName}>
               {course.CallerName}
             </option>
+            </>
           ))}
         </select>
       </div>
       {filterDropdown.length > 0 ? <hr /> : ""}
       <div style={{ margin: '6px' }}>
         <span>Date: </span>
-        <select className='dropdown date' value={date} onChange={handleChangeCourse}>
+        <select className='dropdown date' value={date} onChange={handleChangeCourse} selected=''>
           {uniqueCouse.sort((a, b) => a.Date > b.Date ? 1 : -1).map((course) => (
+            <>
+            <option selected disabled hidden value=''>Select</option>
             <option key={course.id} value={course.Date}>
               {course.Date}
             </option>
+            </>
           ))}
         </select>
       </div>
