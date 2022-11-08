@@ -48,8 +48,6 @@ const Baka = () => {
     return unique;
   };
 
-  console.log(data)
-
   useEffect(() => {
     const data = require("./a/name.json");
     setData(data);
