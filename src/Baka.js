@@ -32,7 +32,6 @@ const Baka = () => {
     setSubmit(true)
   }
 
-
   const getUnique = (arr, comp) => {
     const unique = arr
       //store the comparison values in array
@@ -49,6 +48,8 @@ const Baka = () => {
     return unique;
   };
 
+  console.log(data)
+
   useEffect(() => {
     const data = require("./a/name.json");
     setData(data);
@@ -61,7 +62,6 @@ const Baka = () => {
     return result.Date === date && result.CallerName === CallerName;
   });
 
-
   function formatPhoneNumber(phoneNumberString) {
     var cleaned = ('' + phoneNumberString).replace(/\D/g, '');
     var match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
@@ -72,12 +72,11 @@ const Baka = () => {
     return null;
   }
 
-
   return (
     <div className='timeline-container'>
       <div style={{ margin: '6px' }}>
         <span>Name: </span>
-        <select value={CallerName} onChange={handleChangeName} style={{ borderRadius: '10px' }}>
+        <select className='dropdown' value={CallerName} onChange={handleChangeName}>
           {uniqueName.map((course) => (
             <option key={course.id} value={course.CallerName}>
               {course.CallerName}
@@ -85,10 +84,10 @@ const Baka = () => {
           ))}
         </select>
       </div>
-      <hr />
+      {filterDropdown.length > 0 ? <hr /> : ""}
       <div style={{ margin: '6px' }}>
         <span>Date: </span>
-        <select value={date} onChange={handleChangeCourse} style={{ borderRadius: '10px' }}>
+        <select className='dropdown date' value={date} onChange={handleChangeCourse}>
           {uniqueCouse.sort((a, b) => a.Date > b.Date ? 1 : -1).map((course) => (
             <option key={course.id} value={course.Date}>
               {course.Date}
@@ -96,11 +95,10 @@ const Baka = () => {
           ))}
         </select>
       </div>
-      <button style={{ marginLeft: '50px', borderRadius: '10px', border: '1px solid black' }} onClick={handleSubmit}>Ok</button>
+      <button className='generate' onClick={handleSubmit}>Generate</button>
 
       {submit ?
         <div className='flex'>
-            
            {filterDropdown.length > 0 ? filterDropdown.sort((a, b) => Number(a.Time) > Number(b.Time) ? 1 : -1).map((course) => (
             <div key={course.id} style={{ margin: "10px" }}>
               <p className="time">{course.Time}</p>
