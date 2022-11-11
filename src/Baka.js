@@ -20,6 +20,10 @@ const Baka = () => {
   const [CallerName, setCallerName] = useState("");
   const [submit, setSubmit] = useState(false)
 
+  console.log(data.filter((res) => res.result !== null))
+  // let filterdata = data.filter((res) => res.result !== null);
+
+
   const handleChangeCourse = (event) => {
     setDate(event.target.value);
   };
@@ -53,10 +57,21 @@ const Baka = () => {
     setData(data);
   }, []);
 
+  // let filterdata;
   const uniqueCouse = getUnique(data, "Date");
   const uniqueName = getUnique(data, "CallerName")
+  console.log("name ", uniqueName)
+  // filterdata = uniqueCouse.filter((res) => res.result !== null);
+
+  let filterdata;
+  useEffect(() => {
+    filterdata = uniqueName.filter((res) => res.result !== null);
+  }, [uniqueName, uniqueCouse])
+  // console.log(uniqueCouse.map(c => c.Date))
+  // console.log(uniqueName.map(n => n.CallerName))
 
   const filterDropdown = data.filter(function (result) {
+    // if(result.result !== null) 
     return result.Date === date && result.CallerName === CallerName;
   });
 
@@ -68,13 +83,25 @@ const Baka = () => {
       return [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join('');
     }
     return null;
-  }
+   }
 
   return (
     <div className='timeline-container'>
       <div style={{ margin: '6px' }}>
+        {/*  */}
+        {/* <select  onChange={handleChangeCourse}>
+    {[...new Set(filterdata.map(item => item.Date))].map(item => (
+      <option key={item}>{item}</option>
+    ))}
+  </select>
+  <select onChange={handleChangeName}>
+    {[...new Set(filterdata.map(item => item.CallerName))].map(item => (
+      <option key={item}>{item}</option>
+    ))}
+  </select> */}
+  {/*  */}
         <span>Name: </span>
-        <select className='dropdown' value={CallerName} onChange={handleChangeName} selected=''>
+        <select className='dropdown' value={CallerName}  selected='' onChange={handleChangeName}>
           {uniqueName.map((course) => (
             <>
             <option selected disabled hidden value=''>Select</option>
@@ -88,7 +115,7 @@ const Baka = () => {
       {filterDropdown.length > 0 ? <hr /> : ""}
       <div style={{ margin: '6px' }}>
         <span>Date: </span>
-        <select className='dropdown date' value={date} onChange={handleChangeCourse} selected=''>
+        <select className='dropdown date' value={date}  selected='' onChange={handleChangeCourse}>
           {uniqueCouse.sort((a, b) => a.Date > b.Date ? 1 : -1).map((course) => (
             <>
             <option selected disabled hidden value=''>Select</option>
@@ -99,11 +126,11 @@ const Baka = () => {
           ))}
         </select>
       </div>
-      <button className='generate' onClick={handleSubmit}>Generate</button>
+      {/* <button className='generate' onClick={handleSubmit}>Generate</button> */}
 
-      {submit ?
+      {/* {submit ? */}
         <div className='flex'>
-           {filterDropdown.length > 0 ? filterDropdown.sort((a, b) => Number(a.Time) > Number(b.Time) ? 1 : -1).map((course) => (
+           {filterDropdown.length > 0 && "No Data" ? filterDropdown.sort((a, b) => Number(a.Time) > Number(b.Time) ? 1 : -1).map((course) => (
             <div key={course.id} style={{ margin: "10px" }}>
               <p className="time">{course.Time}</p>
               <HtmlTooltip
@@ -124,8 +151,7 @@ const Baka = () => {
             </div>
           )) : <div className='nodata'>No Data</div>} 
         </div>
-        : null}
-
+        {/* : null} */}
     </div>
   )
 }
